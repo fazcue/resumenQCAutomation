@@ -2,7 +2,7 @@
 | --------------------------------------------- | --------------------------- |
 | [Intro](#java)                                | [Conceptos](#conceptos)     |
 | [POO](#programaci%C3%B3n-orientada-a-objetos) | [RestAssured](#restassured) |
-| [Relaciones](#relaciones-entre-clases)        |                             |
+| [Relaciones](#relaciones-entre-clases)        | [TDD/BDD](#tddbdd)          |
 | [Herencia](#herencia)                         |                             |
 | [Colecciones](#colecciones)                   |                             |
 
@@ -123,10 +123,10 @@ oculta lo que hace un objeto de lo que hacen otros y del mundo exterior, por lo 
 
 **Modificadores de acceso:**
 
--   public: permite acceder desde cualquier clase
--   private: sólo permite acceso desde la misma clase
--   protected: acceso desde su mismo paquete y por las clases que extienda (independientemente del paquete)
--   default: igual a protected, pero sin acceso por herencia
+-   **public**: permite acceder desde cualquier clase
+-   **private**: sólo permite acceso desde la misma clase
+-   **protected**: acceso desde su mismo paquete y por las clases que extienda (independientemente del paquete)
+-   **default**: igual a protected, pero sin acceso por herencia
 
 | visibilidad           | public | private | protected     | default |
 | --------------------- | ------ | ------- | ------------- | ------- |
@@ -138,9 +138,9 @@ oculta lo que hace un objeto de lo que hacen otros y del mundo exterior, por lo 
 
 **Atributos y métodos estáticos:**
 
-"static" indica que los atributos y métodos pertenecen a la propia clase y no a las instancias. De todas formas, las instancias tienen acceso a dichos atributos y métodos estaticos.
+**static** indica que los atributos y métodos **pertenecen a la propia clase** y no a las instancias. De todas formas, las instancias tienen acceso a dichos atributos y métodos estaticos.
 
-Si un atributo es "static", entonces éste ocupa un único lugar en memoria, independientemente de la cantidad de instancias de una clase.
+Si un atributo es _static_, entonces éste ocupa un **único lugar en memoria**, independientemente de la cantidad de instancias de una clase.
 
 **Clase servicio:**
 
@@ -523,8 +523,75 @@ Es una API que **permite realizar las operaciones básicas** en un sistema de ge
 
 ## RestAssured
 
+-   Herramienta para automatizar APIs
+-   Usa BDD
+
 <details open>
 <summary>ocultar / mostrar</summary>
 &nbsp;
+
+**Get Request:**
+
+```java
+@Test
+public void getExample() {
+    // given
+    Response response;
+    // when
+    response = given().get("someEndpoint");
+    // then
+    assertEquals(response.getStatusCode(), 200);
+}
+```
+
+**Post Request:**
+
+```java
+@Test
+public void postExample() {
+    // key:value info (can be a Map)
+    User user
+    // given
+    Response response;
+    // when
+    response = given().contentType("application/json")
+                .body(user)
+                .when().post("someEndpoint");
+    // then
+    assertEquals(response.getStatusCode(), 200);
+}
+```
+
+**POJOS (Plain Old Java Object):**
+
+Clase para crear instancias con la response de una request. Permite **manejar de forma simple y ordenada la data recibida** (generalmente en forma de JSON).
+
+Para evitar getters, setters y constructores se **recomiendo usar lombok**.
+
+```java
+public class PojoUser {
+    private String firstName;
+    private String lastName;
+}
+
+public class Tests {
+    @Test
+    public void pojoTest() {
+        PojoUser user = get("someEndpoint").then()
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .as(PojoUser.class);
+
+        assertEquals(user.firstName, "anyName")
+    }
+}
+```
+
+**Serializar y deserializar:**
+
+La **serialización** implica **convertir objetos o estructuras de datos** en una secuencia de bytes, generalmente en un formato específico como **JSON**, XML o binario. Esto permite que los datos se almacenen o transmitan de manera eficiente.
+
+La **deserialización** es el proceso inverso, donde los **datos serializados se convierten nuevamente en objetos o estructuras de datos** utilizables en la memoria.
 
 </details>
