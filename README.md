@@ -595,3 +595,33 @@ La **serialización** implica **convertir objetos o estructuras de datos** en un
 La **deserialización** es el proceso inverso, donde los **datos serializados se convierten nuevamente en objetos o estructuras de datos** utilizables en la memoria.
 
 </details>
+
+## TDD/BDD
+
+-   BDD: Behavior Driven Development
+-   TDD: Test Driven Development
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
+
+**BDD:**
+
+Es una **metodología de software** resultante de TDD, la cuál permite que el desarrollo de pruebas sea **fácil de comprender para cualquiera** (sea o no tester).
+
+**Gherkin:**
+
+Es un lenguaje que nos permite describir funcionalidades de manera coloquial.
+
+El comportamiento del software es documentado en términos de **escenarios**, los cuales pueden ser ejecutados por test automatizados.
+
+```gherkin
+Feature: login
+
+    Scenario: Unauthenticated user unable to see private pages
+        Given I am a customer at home page // PRECONDICIÓN
+        When I navigate to the private page // PASOS A REALIZAR
+        Then I should be able to see the login form // RESULTADO ESPERADO
+```
+
+</details>
