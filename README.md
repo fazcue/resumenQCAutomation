@@ -1,5 +1,5 @@
-| java                                          | API testing                 |
-| --------------------------------------------- | --------------------------- |
+| java                                          | API testing                 | Cucumber |
+| --------------------------------------------- | --------------------------- | -------- |
 | [Intro](#java)                                | [Conceptos](#conceptos)     |
 | [POO](#programaci%C3%B3n-orientada-a-objetos) | [RestAssured](#restassured) |
 | [Relaciones](#relaciones-entre-clases)        | [TDD/BDD](#tddbdd)          |
@@ -558,7 +558,7 @@ public void postExample() {
                 .body(user)
                 .when().post("someEndpoint");
     // then
-    assertEquals(response.getStatusCode(), 200);
+    assertEquals(response.getStatusCode(), 201);
 }
 ```
 
@@ -566,7 +566,7 @@ public void postExample() {
 
 Clase para crear instancias con la response de una request. Permite **manejar de forma simple y ordenada la data recibida** (generalmente en forma de JSON).
 
-Para evitar getters, setters y constructores se **recomiendo usar lombok**.
+Para evitar getters, setters y constructores se **recomienda usar lombok**.
 
 ```java
 public class PojoUser {
@@ -622,6 +622,70 @@ Feature: login
         Given I am a customer at home page // PRECONDICIÓN
         When I navigate to the private page // PASOS A REALIZAR
         Then I should be able to see the login form // RESULTADO ESPERADO
+```
+
+</details>
+
+## Cucumber
+
+-   Herramienta que soporta BBD
+-   Lee y ejecuta los escenarios creados y valida que el software haga lo que dicen esas especificaciones
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
+
+**.feature**
+
+Archivo de extensión especial dónde se especifica el feature a testear, y los escenarios a correr. Cada escenario contendrá una lista de pasos: Given, When, Then en formato Gherkin.
+
+**Steps**
+
+Paquete dónde tendremos los tests como tal. Para cada paso en el archivo .feature, tendremos un step (test) especifico.
+
+Cucumber conecta los pasos declarados en Gherking con su código correspondiente mediante su nombre.
+
+**STEP IN GHERKIN** 🡲🡲 _match with_ 🡲🡲 **STEP DEFINITIONS** 🡲🡲 _manipulates_ 🡲🡲 **SYSTEM**
+
+**Ejemplo:**
+
+**.feature**
+
+```gherkin
+Feature: wikipedia search
+
+  Scenario: Check wikipedia article for the Greatest Of All Time
+    Given I am an user at the Wikipedia Home Page
+    When I search for Messi the GOAT
+    Then I should be able to see the world cup 🏆
+
+```
+
+**Steps**
+
+```java
+package steps;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.Then;
+
+public class WikipediaTest {
+    @Given("I am an user at the Wikipedia Home Page") // <- Coincide, entonces se conectan
+    public void givenMethod() {
+        // implement the code here
+    }
+
+    @When("I search for Messi the GOAT")
+    public void whenMethod() { // <- NO es obligación que coincida
+        // implement the code here
+    }
+
+    @Then("I should be able to see the world cup")
+    public void thenMethod() {
+        // implement the code here
+    }
+}
 ```
 
 </details>
