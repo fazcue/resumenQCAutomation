@@ -1,7 +1,7 @@
 | java                                          | API testing                 | Cucumber               | JavaScript              |
 | --------------------------------------------- | --------------------------- | ---------------------- | ----------------------- |
 | [Intro](#java)                                | [Conceptos](#conceptos)     | [Conceptos](#cucumber) | [Funciones](#funciones) |
-| [POO](#programaci%C3%B3n-orientada-a-objetos) | [RestAssured](#restassured) |
+| [POO](#programaci%C3%B3n-orientada-a-objetos) | [RestAssured](#restassured) |                        | [Promesas](#promesas)   |
 | [Relaciones](#relaciones-entre-clases)        | [TDD/BDD](#tddbdd)          |
 | [Herencia](#herencia)                         |                             |
 | [Colecciones](#colecciones)                   |                             |
@@ -776,6 +776,76 @@ const multiplyByTwo = multiplyBy(2)
 
 multiplyByTwo(2) // 4
 multiplyByTwo(3) // 6
+```
+
+</details>
+
+## Promesas
+
+-   operación asincrona
+-   retorna un objeto tipo Promise
+-   eventualmente resuelve con un resolve o un reject
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
+
+**Sintaxis:**
+
+```javascript
+// Ejemplo con un setTimeOut
+const myPromise = new Promise((res, rej) => {
+	setTimeout(() => {
+		if (Math.random() > 0.5) {
+			res({ data: 'resolve OK!' })
+		}
+
+		rej({ message: 'reject!!!' })
+	}, 1000)
+})
+
+myPromise
+	.then((res) => console.log(res.data))
+	.catch((error) => console.log(error.message))
+```
+
+**Estados posibles:**
+
+-   **Pendiente**: estado inicial. Aún no ha resuelto ni rechazado. Su resultado es **undefined**
+-   **Fulfilled**: cuando la operación finaliza satisfactoriamente (**resolve**). Su resultado es **un valor determinado**
+-   **Rejected**: cuando la operación falla (**reject**). Su resultado es **un objeto error**
+
+**Callback function:**
+
+Función que se pasa como argumento a otra función, la cual se invoca dentro de la misma. Permite ejecutar código de manera asyncrona.
+
+```javascript
+function obtenerDatos() {
+	return new Promise((resolve, reject) => {
+		// Simulación de una operación asincrónica
+		setTimeout(() => {
+			if (Math.random() > 0.5) {
+				const datos = { nombre: 'John', edad: 30 }
+				resolve(datos)
+			}
+			reject('Sin data')
+		}, 500)
+	})
+}
+
+function procesarDatos(datos, callback) {
+	// Simulación de un procesamiento de datos
+	setTimeout(() => {
+		const resultado = datos.edad * 2
+		callback(resultado)
+	}, 1000)
+}
+
+const myCallBack = (res) => console.log('El resultado es:', res)
+
+obtenerDatos()
+	.then((datos) => procesarDatos(datos, myCallBack))
+	.catch((error) => console.log('Error al obtener los datos: ' + error))
 ```
 
 </details>
