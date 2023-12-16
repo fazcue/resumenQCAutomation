@@ -1,6 +1,6 @@
-| java                                          | API testing                 | Cucumber |
-| --------------------------------------------- | --------------------------- | -------- |
-| [Intro](#java)                                | [Conceptos](#conceptos)     |
+| java                                          | API testing                 | Cucumber               | JavaScript              |
+| --------------------------------------------- | --------------------------- | ---------------------- | ----------------------- |
+| [Intro](#java)                                | [Conceptos](#conceptos)     | [Conceptos](#cucumber) | [Funciones](#funciones) |
 | [POO](#programaci%C3%B3n-orientada-a-objetos) | [RestAssured](#restassured) |
 | [Relaciones](#relaciones-entre-clases)        | [TDD/BDD](#tddbdd)          |
 | [Herencia](#herencia)                         |                             |
@@ -626,7 +626,7 @@ Feature: login
 
 </details>
 
-## Cucumber
+# Cucumber
 
 -   Herramienta que soporta BBD
 -   Lee y ejecuta los escenarios creados y valida que el software haga lo que dicen esas especificaciones
@@ -686,6 +686,96 @@ public class WikipediaTest {
         // implement the code here
     }
 }
+```
+
+</details>
+
+# JavaScript
+
+-   lenguaje de alto nivel
+-   ampliamente utilizado en el desarrollo web, ya que se ejecuta en el browser del cliente y permite manipular el DOM y la interacción con el usuario
+-   gracias a plataformas como Node.js, también se lo utiliza en el lado del servidor
+
+## Funciones
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
+
+**Formas de declarar una función:**
+
+```javascript
+// function declaration
+function name() {
+	// No tengo parametros!
+}
+
+// function expresion
+const nameTwo = () => {
+	// Soy una arrow function!
+}
+
+const nameThree = (a, b = 0) => {
+	return a + b // no recibo b? tengo valor por defecto!
+}
+
+const nameFour = (a, b, ...rest) => {
+	let sum = a + b
+
+	for (let num of rest) {
+		sum += num
+	}
+
+	return sum // puedo recibir infinitos argumentos, y los agrupo en un array gracias al spread operator
+}
+```
+
+**Función anónima:** función sin nombre
+
+```javascript
+let arr = [1, 2, 3]
+
+const double = arr.map((num) => num * 2) // función anónima de tipo arrow, dentro del método .map
+```
+
+**IIFE:** función que se ejecuta inmediatamente. Evita el hoisting. Útil para crear un ámbito local y evitar la contaminación del espacio global
+
+```javascript
+const counter = (function () {
+	let count = 0 // Variable privada
+
+	return {
+		increment: function () {
+			count++
+		},
+		decrement: function () {
+			count--
+		},
+		getCount: function () {
+			return count
+		},
+	}
+})()
+
+counter.increment() // + 1
+counter.increment() // + 1
+counter.decrement() // - 1
+console.log(counter.getCount()) // = 1
+```
+
+**Clousure:** Permite que una función mantenga acceso a las variables de su ámbito exterior, incluso después de que la función externa haya terminado de ejecutarse.
+
+Una closure se crea cuando se define una función interna dentro de una función externa, y la función interna hace referencia a variables del ámbito de la función externa. La función interna "cierra" (o "envuelve") estas variables, creando una closure.
+
+```javascript
+const multiplyBy = (multiplier) {
+    return (num) => multiplier * num
+}
+
+const multiplyByTwo = multiplyBy(2)
+
+multiplyByTwo(2) // 4
+multiplyByTwo(3) // 6
 ```
 
 </details>
