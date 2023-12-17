@@ -2,7 +2,7 @@
 | --------------------------------------------- | --------------------------- | ---------------------- | ----------------------- |
 | [Intro](#java)                                | [Conceptos](#conceptos)     | [Conceptos](#cucumber) | [Funciones](#funciones) |
 | [POO](#programaci%C3%B3n-orientada-a-objetos) | [RestAssured](#restassured) |                        | [Promesas](#promesas)   |
-| [Relaciones](#relaciones-entre-clases)        | [TDD/BDD](#tddbdd)          |
+| [Relaciones](#relaciones-entre-clases)        | [TDD/BDD](#tddbdd)          |                        | [Varios](#varios)       |
 | [Herencia](#herencia)                         |                             |
 | [Colecciones](#colecciones)                   |                             |
 
@@ -768,8 +768,8 @@ console.log(counter.getCount()) // = 1
 Una closure se crea cuando se define una función interna dentro de una función externa, y la función interna hace referencia a variables del ámbito de la función externa. La función interna "cierra" (o "envuelve") estas variables, creando una closure.
 
 ```javascript
-const multiplyBy = (multiplier) {
-    return (num) => multiplier * num
+const multiplyBy = (multiplier) => {
+	return (num) => multiplier * num
 }
 
 const multiplyByTwo = multiplyBy(2)
@@ -811,7 +811,7 @@ myPromise
 
 **Estados posibles:**
 
--   **Pendiente**: estado inicial. Aún no ha resuelto ni rechazado. Su resultado es **undefined**
+-   **Pending**: estado inicial. Aún no ha resuelto ni rechazado. Su resultado es **undefined**
 -   **Fulfilled**: cuando la operación finaliza satisfactoriamente (**resolve**). Su resultado es **un valor determinado**
 -   **Rejected**: cuando la operación falla (**reject**). Su resultado es **un objeto error**
 
@@ -846,6 +846,63 @@ const myCallBack = (res) => console.log('El resultado es:', res)
 obtenerDatos()
 	.then((datos) => procesarDatos(datos, myCallBack))
 	.catch((error) => console.log('Error al obtener los datos: ' + error))
+```
+
+</details>
+
+## Varios
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
+
+**var vs let:**
+
+```javascript
+// Diferencia #1: hoisting
+
+// var: se puede acceder a la variable incluso antes de ser declarada,
+// pero retorna "undefined"
+console.log(numVar)
+var numVar = 1
+
+// let: NO se puede acceder a la variable antes de declararla,
+// dándo un "ReferenceError: numLet is not defined"
+console.log(numLet)
+let numLet = 1
+
+// Diferencia #2: Scoping
+function fn() {
+	if (true) {
+		var fnVar = 1
+		let fnLet = 1
+	}
+
+	// en una función, var NO está limitada al scope donde fue declarada
+	// sino al scope de la función en si
+	console.log(fnVar) // 1
+
+	// en cambio let SI está limitada al scope donde es declarada
+	console.log(fnLet) // undefined
+}
+
+// Diferencia #3: re-declaration
+var name = 'Jhon'
+var name = 'Smith' // válido
+
+let age = 30
+let age = 25 // NO válido
+
+// Diferencia #4: Global scope
+
+// Variables var declaradas fuera de cualquier función tendrá scope global
+// Serán añadidas al objeto global ("window" en navegadores, "global" en node.js)
+
+var x = 1
+console.log(window.x) // 1
+
+let y = 2
+console.log(window.y) // undefined
 ```
 
 </details>
