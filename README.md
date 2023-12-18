@@ -5,6 +5,7 @@
 | [Relaciones](#relaciones-entre-clases)        | [TDD/BDD](#tddbdd)          |                        | [Varios](#varios)       | [Fixture, intercept, request](#fixture-intercept-request) |
 | [Herencia](#herencia)                         |                             |
 | [Colecciones](#colecciones)                   |                             |
+| [Excepciones](#excepciones)                   |
 
 # Java
 
@@ -466,6 +467,89 @@ nuevos problemas de índole similar
 -   TreeSet: mantiene todos sus elementos de manera **ordenada** (forma ascendente), pero los métodos de agregar, eliminar son más lentos que el HashSet ya que cada vez que le entra un elemento debe posicionarlo para que quede ordenado
 
 -   LinkedHashSet:
+
+</details>
+
+## Excepciones
+
+-   evento que ocurre durante la ejecución de un programa que interrumpe el flujo normal de las instrucciones del programa.
+-   una excepción es un objeto que modela un evento excepcional, el cual no debería haber ocurrido
+
+### Check conocimiento
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
+
+1. La clase Error maneja errores: **de la máquina virtual de java**
+2. La clase Exception maneja errores: **del código**
+3. La clase padre de todas las excepciones y errores es la clase: **throwable**
+4. Las excepciones se manejan con el bloque: **try catch**
+5. Para cerrar recursos después de una operación usamos el bloque: **finally**
+6. Cuando queremos informar que un método puede tirar una excepción usamos la palabra reservada: **throws**
+7. Cuando queremos lanzar una excepción de manera explicita usamos el bloque: **throw**
+8. En Java la diferencia entre throws y throw es: **throws indica el tipo de excepción que maneja el método y throw arroja una excepción**
+9. Teniendo el siguiente código, indicar que excepción se debería manejar (div / 0): **ArithmeticException**
+10. Teniendo el siguiente código, indicar que excepción se debería manejar (indice inexistente en array): **ArrayIndexOutOfBoundsException**
+
+</details>
+
+### Resumen
+
+**Situaciones que provocan una excepción:**
+
+-   No hay memoria disponible para asignar
+-   Acceso a un elemento de un array fuera de rango
+-   Leer por teclado un dato de un tipo distinto al esperado
+-   Error al abrir un fichero
+-   División por cero
+
+**Jerarquía:**
+
+Clase **Throwable**: subclases **Exception** y **Error**
+
+-   **Error**: Las excepciones de tipo Error están relacionadas con errores que ocurren en la Máquina Virtual de Java y no en tu programa
+-   **Exception**: dividir por cero, límite de matriz y errores de archivo caen en esta categoría.
+
+```java
+try {
+    int div = 10 / 0
+} catch(ArithmeticException error) {
+    System.out.println("Error");
+} finally {
+
+}
+```
+
+**Métodos throwable:**
+
+-   **getMessage**: descripción del la excepción
+-   **fillInStackTrace**: objeto Throwable que contiene un seguimiento de pila completo.
+-   **toString**: objeto String que contiene una descripción completa de la excepción
+
+**Cláusula throws:**
+
+La cláusula throws lista las excepciones que un método puede lanzar
+
+Si la excepción no se trata, el manejador de excepciones realiza lo siguiente:
+
+-   Muestra la descripción de la excepción.
+-   Muestra la traza de la pila de llamadas.
+-   Provoca el final del programa.
+
+**Excepciones más comunes:**
+
+-   **ArithmeticException**: cuando ocurre una condición de error aritmético durante una operación matemática
+-   **NullPointerException**: cuando se intenta acceder a un objeto que es null
+-   **ArrayIndexOutOfBoundsException**: cuando se intenta acceder a un índice fuera del rango válido en un arreglo
+-   **IllegalArgumentException**: cuando se pasa un argumento ilegal o incorrecto a un método
+-   **FileNotFoundException**: cuando no se encuentra un archivo en la ruta especificada
+-   **IOException**: cuando ocurre algún error de entrada/salida durante la lectura o escritura de datos
+-   **ClassNotFoundException**: cuando no se encuentra una clase durante la ejecución
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
 
 </details>
 
