@@ -1,8 +1,8 @@
-| java                                          | API testing                 | Cucumber               | JavaScript              | Cypress             |
-| --------------------------------------------- | --------------------------- | ---------------------- | ----------------------- | ------------------- |
-| [Intro](#java)                                | [Conceptos](#conceptos)     | [Conceptos](#cucumber) | [Funciones](#funciones) | [Metodos](#metodos) |
-| [POO](#programaci%C3%B3n-orientada-a-objetos) | [RestAssured](#restassured) |                        | [Promesas](#promesas)   |
-| [Relaciones](#relaciones-entre-clases)        | [TDD/BDD](#tddbdd)          |                        | [Varios](#varios)       |
+| java                                          | API testing                 | Cucumber               | JavaScript              | Cypress                                                   |
+| --------------------------------------------- | --------------------------- | ---------------------- | ----------------------- | --------------------------------------------------------- |
+| [Intro](#java)                                | [Conceptos](#conceptos)     | [Conceptos](#cucumber) | [Funciones](#funciones) | [Metodos](#metodos)                                       |
+| [POO](#programaci%C3%B3n-orientada-a-objetos) | [RestAssured](#restassured) |                        | [Promesas](#promesas)   | [Waits](#waits)                                           |
+| [Relaciones](#relaciones-entre-clases)        | [TDD/BDD](#tddbdd)          |                        | [Varios](#varios)       | [Fixture, intercept, request](#fixture-intercept-request) |
 | [Herencia](#herencia)                         |                             |
 | [Colecciones](#colecciones)                   |                             |
 
@@ -953,5 +953,93 @@ describe('Login', () => {
 **.type(**_string_**)** ingresar datos en un input
 
 **.click()** clickear un elemento
+
+**.contains(**_string_**)** obtener un elemento que contenga cierto texto
+
+**.as(**_string_**)** asignar un alias a un elemento
+
+**.within(**_callback_**)** para buscar subelementos (ej: un form)
+
+**.find(**_element_**)** buscar un subelemento
+
+**.check()** para marcar un radio / checkbox
+
+</details>
+
+## Waits
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
+
+**Implicit wait:**
+
+```javascript
+const miliseconds = 10000
+cy.wait(miliseconds) // Espera si o si X milisegundos (NO recomendado)
+```
+
+**Explicit wait:**
+
+```javascript
+const miliseconds = 10000
+
+// con timeout
+cy.get('someLocator', { timeout: miliseconds }) // Espera X milisegundos como máximo
+
+// con default timeout: 4 segundos (configurable)
+cy.get('someLocator')
+```
+
+</details>
+
+## Fixture, intercept, request
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
+
+**fixture:**
+
+```javascript
+cy.fixture('data').as('data')
+
+cy.get('@data').then((data) => {
+	const { someProp } = data
+
+	cy.get('someElement').type(someProp)
+})
+```
+
+**intercept:**
+
+```javascript
+// Method : path : fixture (optional)
+cy.intercept('GET', '/path', {
+	fixture: 'fixtureName',
+}).as('myIntercept')
+
+cy.wait('@myIntercept').should((res) => {
+	const { response } = res
+	const { body, statusCode } = response
+
+	expect(statusCode).to.equal(200)
+	expect(body).to.equal('someThing')
+})
+```
+
+**request:**
+
+```javascript
+cy.request('endpointUrl').as('myRequest')
+
+cy.get('@myRequest').then((res) => {
+	const { status, body } = res
+	const { someProp } = body
+
+	expect(status).to.be.equal(200)
+	expect(someProp).to.be.equal('someThing')
+})
+```
 
 </details>
