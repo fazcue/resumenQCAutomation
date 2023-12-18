@@ -455,8 +455,8 @@ nuevos problemas de índole similar
 
 **Lists:**
 
--   ArrayList: tipo de lista más común. Es como **un arreglo pero dinámico**.
--   LinkedList: **lista de doble enlace**. Mejor rendimiendo al agregar y quitar elementos que un ArrayList, pero peor en set y get.
+-   **ArrayList**: tipo de lista más común. Es como **un arreglo pero dinámico**.
+-   **LinkedList**: **lista de doble enlace**. Mejor rendimiendo al agregar y quitar elementos que un ArrayList, pero peor en set y get.
 
 **Sets:**
 
@@ -464,9 +464,119 @@ nuevos problemas de índole similar
 
     **Qué es un hash:** función criptográfica hash es un **algoritmo matemático** que transforma cualquier bloque arbitrario de datos en una nueva serie de caracteres alfanuméricos (mezcla entre letras y números) con una **longitud fija**
 
--   TreeSet: mantiene todos sus elementos de manera **ordenada** (forma ascendente), pero los métodos de agregar, eliminar son más lentos que el HashSet ya que cada vez que le entra un elemento debe posicionarlo para que quede ordenado
+-   **TreeSet**: mantiene todos sus elementos de manera **ordenada** (forma ascendente), pero los métodos de agregar, eliminar son más lentos que el HashSet ya que cada vez que le entra un elemento debe posicionarlo para que quede ordenado
+-   **LinkedHashSet**: Está entre HashSet y TreeSet. Se implementa como una tabla hash con una lista vinculada que se ejecuta a través de ella, por lo que proporciona el orden de inserción.
 
--   LinkedHashSet:
+**Maps:**
+
+-   **HashMap**: Es un mapa implementado a través de una tabla hash, las llaves se almacenan utilizando un algoritmo de hash solo para las llaves y evitar que se repitan.
+-   **TreeMap**: Es un mapa que ordena los elementos de manera ascendente a través de las llaves.
+-   **LinkedHashMap**: Es un HashMap que conserva el orden de inserción.
+
+**Métodos:**
+
+-   **add**: añadir elemento en lista o set
+-   **put**: añadir elemento en un map
+
+-   **remove** - lista: según indice o elemento - set: según elemento (no tiene indice) - map: según key
+
+**Recorrer una colección:**
+
+```java
+// Lista
+ArrayList<Integer> list = new ArrayList();
+
+for (Integer num : list) {
+    //...
+}
+
+//Set
+HashSet<Integer> set = new HashSet();
+
+for (Integer num : set) {
+    //...
+}
+
+//Map
+HashMap<String, Integer> map = new HashMap();
+
+    // con Map.Entry
+    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+        entry.getKey(); // trae la key
+        entry.getValue(); // trae el value
+    }
+
+    // solo la key
+    for (String propName : map.keySet()) {
+        //...
+    }
+
+    // solo el value
+    for (String propName : map.values()) {
+        //...
+    }
+```
+
+**Iterator:** objeto que pertenece al framework de colecciones. Este, nos permite recorrer, acceder a la información y eliminar algún elemento de una colección
+
+```java
+ArrayList<Integer> list = new ArrayList();
+
+Iterator it = list.iterator();
+
+while (it.hasNext()) {
+    Integer next = it.next();
+
+    if (next > 5) {
+        it.remove();
+    }
+}
+```
+
+**Ordenar una colección:** Collections.sort(colección)
+
+Algunas colecciones, como los conjuntos o los mapas no pueden utilizar el sort(). Ya que por ejemplo los HashSet, manejan valores Hash y el sort() no sabe ordenar por hash, si no por
+elementos. Por otro lado, los mapas al tener dos datos, el sort() no sabe por cuál de esos datos
+ordenar.
+
+```java
+// lista
+ArrayList<Integer> list = new ArrayList();
+Collections.sort(list);
+
+// set
+HashSet<Integer> set = new HashSet();
+ArrayList<Integer> list2 = new ArrayList(set); // se debe convertir a lista
+Collections.sort(list2)
+
+// map
+HashMap<String, Integer> map = new HashMap();
+TreeMap<String, Integer> map2 = new TreeMap(map); // se convierte a TreeMap
+
+```
+
+**Comparator:** Para ordenar una colección de objetos. No se puede utilizar _sort_ ya que sólo es aplicable para ordenar colecciones uniformes.
+
+Para esto, **utilizamos la interfaz Comparator** con su
+función **compare**() dentro de nuestra clase entidad.
+
+```java
+public static Comparator<Perro> compararEdad = new Comparator<Perro>() {
+    @Override
+    public int compare(Perro p1, Perro p2) {
+        return p2.getEdad().compareTo(p1.getEdad());
+    }
+}
+
+// uso en lista
+ArrayList<Perro> perros = new ArrayList();
+perros.sort(Perro.compararEdad);
+
+// uso en set
+HashSet<Perro> perrosSet = new HashSet();
+ArrayList<Perro> perrosList = new ArrayList(perros2);
+perrosList.sort(Perro.compararEdad);
+```
 
 </details>
 
