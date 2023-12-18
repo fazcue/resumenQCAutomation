@@ -1,6 +1,6 @@
-| java                                          | API testing                 | Cucumber               | JavaScript              |
-| --------------------------------------------- | --------------------------- | ---------------------- | ----------------------- |
-| [Intro](#java)                                | [Conceptos](#conceptos)     | [Conceptos](#cucumber) | [Funciones](#funciones) |
+| java                                          | API testing                 | Cucumber               | JavaScript              | Cypress             |
+| --------------------------------------------- | --------------------------- | ---------------------- | ----------------------- | ------------------- |
+| [Intro](#java)                                | [Conceptos](#conceptos)     | [Conceptos](#cucumber) | [Funciones](#funciones) | [Metodos](#metodos) |
 | [POO](#programaci%C3%B3n-orientada-a-objetos) | [RestAssured](#restassured) |                        | [Promesas](#promesas)   |
 | [Relaciones](#relaciones-entre-clases)        | [TDD/BDD](#tddbdd)          |                        | [Varios](#varios)       |
 | [Herencia](#herencia)                         |                             |
@@ -904,5 +904,54 @@ console.log(window.x) // 1
 let y = 2
 console.log(window.y) // undefined
 ```
+
+</details>
+
+# Cypress
+
+-   Herramienta de testing frontend
+-   Soporta E2E testing y Component testing
+-   Utiliza node.js para correr
+
+## Estructura
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
+
+**describe(**_title_, _callback_**)** Describe una suite con un título e incluye una callback, la cuál contiene otras suites
+
+**context(**_title_, _callback_**)** igual a describe, para agrugar tests
+
+**it(**_title_, _callback_**)** test con un título y una callback con las secuencias a testear
+
+```javascript
+describe('Login', () => {
+	context('failed', () => {
+		it('no username', () => {
+			// test here
+		})
+		it('no password', () => {
+			// test here
+		})
+	})
+})
+```
+
+</details>
+
+## Metodos
+
+<details open>
+<summary>ocultar / mostrar</summary>
+&nbsp;
+
+**.visit(**_url_**)** cargar una página
+
+**.get(**_element_**)** obtener un elemento del DOM
+
+**.type(**_string_**)** ingresar datos en un input
+
+**.click()** clickear un elemento
 
 </details>
